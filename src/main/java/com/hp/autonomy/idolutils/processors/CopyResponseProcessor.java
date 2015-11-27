@@ -31,7 +31,7 @@ public class CopyResponseProcessor implements Processor<Boolean> {
 
             return true;
         }
-        catch(IOException e) {
+        catch(final IOException e) {
             throw new ProcessorException(e);
         }
     }
