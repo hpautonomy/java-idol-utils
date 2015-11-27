@@ -1,3 +1,8 @@
+/*
+ * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
+ */
+
 package com.hp.autonomy.idolutils.processors;
 
 import com.autonomy.aci.client.transport.AciResponseInputStream;
@@ -16,13 +21,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/*
- * $Id:$
- *
- * Copyright (c) 2015, Autonomy Systems Ltd.
- *
- * Last modified by $Author:$ on $Date:$
- */
 public class CopyResponseProcessorTest {
 
     private InputStream inputStream;
