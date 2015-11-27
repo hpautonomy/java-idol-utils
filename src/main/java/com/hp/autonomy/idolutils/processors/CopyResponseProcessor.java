@@ -1,3 +1,8 @@
+/*
+ * Copyright 2015 Hewlett-Packard Development Company, L.P.
+ * Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License.
+ */
+
 package com.hp.autonomy.idolutils.processors;
 
 import com.autonomy.aci.client.services.Processor;
@@ -7,12 +12,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import org.apache.commons.io.IOUtils;
 
-/*
- * $Id$
- *
- * Copyright (c) 2013, Autonomy Systems Ltd.
- *
- * Last modified by $Author$ on $Date$
+/**
+ * Processor which copies the entire response stream into the given {@link OutputStream} before flushing the output stream.
  */
 public class CopyResponseProcessor implements Processor<Boolean> {
 
@@ -20,10 +21,20 @@ public class CopyResponseProcessor implements Processor<Boolean> {
 
     private final transient OutputStream outputStream;
 
+    /**
+     * Creates a new CopyResponseProcessor which writes to the given OutputStream.
+     * @param outputStream The OutputStream to write to
+     */
     public CopyResponseProcessor(final OutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
+    /**
+     * Copies the given AciResponseInputStream into the OutputStream.
+     * @param aciResponse The AciResponseInputStream to read
+     * @return true If the method completes successfully
+     * @throws ProcessorException If an IOException is thrown internally.
+     */
     @Override
     public Boolean process(final AciResponseInputStream aciResponse) {
         try {
@@ -33,7 +44,7 @@ public class CopyResponseProcessor implements Processor<Boolean> {
 
             return true;
         }
-        catch(IOException e) {
+        catch(final IOException e) {
             throw new ProcessorException(e);
         }
     }
