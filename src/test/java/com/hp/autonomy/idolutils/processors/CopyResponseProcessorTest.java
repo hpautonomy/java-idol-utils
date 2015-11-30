@@ -5,6 +5,8 @@
 
 package com.hp.autonomy.idolutils.processors;
 
+import com.autonomy.aci.client.services.Processor;
+import com.autonomy.aci.client.services.ProcessorException;
 import com.autonomy.aci.client.transport.AciResponseInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,7 +34,7 @@ public class CopyResponseProcessorTest {
     }
 
     @Test
-    public void testProcess() throws IOException {
+    public void process() throws IOException {
         final AciResponseInputStream aciResponseInputStream = mock(AciResponseInputStream.class);
         when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(new Answer<Object>() {
             @Override
@@ -42,9 +44,23 @@ public class CopyResponseProcessorTest {
         });
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        final CopyResponseProcessor processor = new CopyResponseProcessor(outputStream);
+        final Processor<Boolean> processor = new CopyResponseProcessor(outputStream);
         processor.process(aciResponseInputStream);
 
         assertThat(outputStream.toString("UTF-8"), is("Hello world!"));
+    }
+
+    @Test(expected = ProcessorException.class)
+    public void badInput() throws IOException {
+        final AciResponseInputStream aciResponseInputStream = mock(AciResponseInputStream.class);
+        when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(final InvocationOnMock invocationOnMock) throws Throwable {
+                throw new IOException();
+            }
+        });
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        final Processor<Boolean> processor = new CopyResponseProcessor(outputStream);
+        processor.process(aciResponseInputStream);
     }
 }
