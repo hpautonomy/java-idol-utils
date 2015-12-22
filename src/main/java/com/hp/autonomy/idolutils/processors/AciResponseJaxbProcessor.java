@@ -13,6 +13,7 @@ import com.hp.autonomy.types.idol.IdolResponseParser;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Generic processor for handling Idol responses.
@@ -33,7 +34,7 @@ public class AciResponseJaxbProcessor<T> implements Processor<T> {
     public T process(final AciResponseInputStream aciResponseInputStream) {
         final String xml;
         try {
-            xml = IOUtils.toString(aciResponseInputStream);
+            xml = IOUtils.toString(aciResponseInputStream, StandardCharsets.UTF_8);
         } catch (final IOException e) {
             throw new ProcessorException("Error running ACI command", e);
         }
