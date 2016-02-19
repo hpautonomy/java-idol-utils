@@ -35,6 +35,11 @@ public class AciResponseProcessorFactoryTest {
     }
 
     @Test
+    public void createEmptyAciResponseProcessor() {
+        assertNotNull(aciResponseProcessorFactory.createEmptyAciResponseProcessor());
+    }
+
+    @Test
     public void processorException() {
         assertNotNull(aciResponseProcessorFactory.createAciResponseProcessor(GetStatusResponseData.class));
     }
