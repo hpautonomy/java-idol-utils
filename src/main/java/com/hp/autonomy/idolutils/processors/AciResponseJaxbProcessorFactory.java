@@ -12,7 +12,7 @@ import com.hp.autonomy.types.idol.Error;
 import com.hp.autonomy.types.idol.IdolResponseParser;
 
 public class AciResponseJaxbProcessorFactory {
-    private final IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser;
+    protected final IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser;
 
     public AciResponseJaxbProcessorFactory() {
         idolResponseParser = new IdolResponseParser<>(new IdolResponseParser.Function<Error, AciErrorException>() {
@@ -30,5 +30,9 @@ public class AciResponseJaxbProcessorFactory {
 
     public <T> Processor<T> createAciResponseProcessor(final Class<T> responseDataType) {
         return new AciResponseJaxbProcessor<>(idolResponseParser, responseDataType);
+    }
+
+    public Processor<Void> createEmptyAciResponseProcessor() {
+        return new EmptyAciResponseJaxbProcessor(idolResponseParser);
     }
 }
