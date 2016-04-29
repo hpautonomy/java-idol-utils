@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * Builds error exception from Idol error response
  */
-@SuppressWarnings("UseOfObsoleteDateTimeApi")
+@SuppressWarnings({"UseOfObsoleteDateTimeApi", "WeakerAccess"})
 @Setter
 @NoArgsConstructor
 @Accessors(chain = true)

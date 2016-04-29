@@ -5,10 +5,10 @@
 
 package com.hp.autonomy.idolutils.processors;
 
-import com.autonomy.aci.client.services.AciErrorException;
-import com.autonomy.aci.client.services.ProcessorException;
+import com.hp.autonomy.idolutils.IdolXmlMarshaller;
 import com.hp.autonomy.types.idol.GetStatusResponseData;
-import com.hp.autonomy.types.idol.IdolResponseParser;
+import com.hp.autonomy.types.idol.QueryResponseData;
+import com.hp.autonomy.types.idol.content.Blacklist;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(MockitoJUnitRunner.class)
 public class AciResponseProcessorFactoryTest {
     @Mock
-    private IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser;
+    private IdolXmlMarshaller idolXmlMarshaller;
 
     private AciResponseJaxbProcessorFactory aciResponseProcessorFactory;
 
@@ -35,6 +35,11 @@ public class AciResponseProcessorFactoryTest {
     }
 
     @Test
+    public void createQueryAciResponseProcessor() {
+        assertNotNull(aciResponseProcessorFactory.createQueryAciResponseProcessor(QueryResponseData.class, Blacklist.class));
+    }
+
+    @Test
     public void createEmptyAciResponseProcessor() {
         assertNotNull(aciResponseProcessorFactory.createEmptyAciResponseProcessor());
     }
@@ -42,5 +47,10 @@ public class AciResponseProcessorFactoryTest {
     @Test
     public void processorException() {
         assertNotNull(aciResponseProcessorFactory.createAciResponseProcessor(GetStatusResponseData.class));
+    }
+
+    @Test
+    public void testName() {
+        assertNotNull(aciResponseProcessorFactory.getMarshaller());
     }
 }

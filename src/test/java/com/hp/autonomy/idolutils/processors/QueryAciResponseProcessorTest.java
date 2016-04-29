@@ -7,7 +7,8 @@ package com.hp.autonomy.idolutils.processors;
 
 import com.autonomy.aci.client.transport.AciResponseInputStream;
 import com.hp.autonomy.idolutils.IdolXmlMarshaller;
-import com.hp.autonomy.types.idol.GetStatusResponseData;
+import com.hp.autonomy.types.idol.QueryResponseData;
+import com.hp.autonomy.types.idol.content.Blacklist;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,23 +20,22 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AciResponseProcessorTest {
+public class QueryAciResponseProcessorTest {
     @Mock
-    private IdolXmlMarshaller idolResponseParser;
-
+    private IdolXmlMarshaller idolXmlMarshaller;
     @Mock
     private AciResponseInputStream inputStream;
 
-    private AciResponseJaxbProcessor<GetStatusResponseData> aciResponseProcessor;
+    private QueryAciResponseJaxbProcessor<QueryResponseData> aciResponseProcessor;
 
     @Before
     public void setUp() {
-        aciResponseProcessor = new AciResponseJaxbProcessor<>(idolResponseParser, GetStatusResponseData.class);
+        aciResponseProcessor = new QueryAciResponseJaxbProcessor<>(idolXmlMarshaller, QueryResponseData.class, Blacklist.class);
     }
 
     @Test
     public void process() {
         aciResponseProcessor.process(inputStream);
-        verify(idolResponseParser).parseIdolResponseData(any(InputStream.class), any(Class.class));
+        verify(idolXmlMarshaller).parseIdolQueryResponseData(any(InputStream.class), any(Class.class), any(Class.class));
     }
 }
