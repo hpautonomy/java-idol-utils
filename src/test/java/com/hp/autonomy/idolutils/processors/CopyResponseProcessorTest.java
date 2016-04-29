@@ -53,6 +53,7 @@ public class CopyResponseProcessorTest {
     @Test(expected = ProcessorException.class)
     public void badInput() throws IOException {
         final AciResponseInputStream aciResponseInputStream = mock(AciResponseInputStream.class);
+        //noinspection ProhibitedExceptionDeclared
         when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(new Answer<Object>() {
             @Override
             public Object answer(final InvocationOnMock invocationOnMock) throws Throwable {

@@ -5,39 +5,27 @@
 
 package com.hp.autonomy.idolutils.processors;
 
-import com.autonomy.aci.client.services.AciErrorException;
 import com.autonomy.aci.client.services.Processor;
-import com.autonomy.aci.client.services.ProcessorException;
 import com.autonomy.aci.client.transport.AciResponseInputStream;
-import com.hp.autonomy.types.idol.IdolResponseParser;
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import com.hp.autonomy.idolutils.IdolXmlMarshaller;
 
 /**
  * Generic processor for handling Idol responses.
  * Note that this uses DOM processing behind the scenes so should not be used for very large responses.
  */
+@SuppressWarnings("WeakerAccess")
 public class EmptyAciResponseJaxbProcessor implements Processor<Void> {
     private static final long serialVersionUID = -1983490659468698548L;
 
-    private final IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser;
+    private final IdolXmlMarshaller idolXmlMarshaller;
 
-    public EmptyAciResponseJaxbProcessor(final IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser) {
-        this.idolResponseParser = idolResponseParser;
+    public EmptyAciResponseJaxbProcessor(final IdolXmlMarshaller idolXmlMarshaller) {
+        this.idolXmlMarshaller = idolXmlMarshaller;
     }
 
     @Override
     public Void process(final AciResponseInputStream aciResponseInputStream) {
-        final String xml;
-        try {
-            xml = IOUtils.toString(aciResponseInputStream, StandardCharsets.UTF_8);
-        } catch (final IOException e) {
-            throw new ProcessorException("Error running ACI command", e);
-        }
-
-        idolResponseParser.parseIdolResponse(xml);
+        idolXmlMarshaller.parseIdolResponse(aciResponseInputStream);
         return null;
     }
 }

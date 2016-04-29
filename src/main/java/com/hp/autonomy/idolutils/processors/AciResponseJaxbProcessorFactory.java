@@ -5,34 +5,32 @@
 
 package com.hp.autonomy.idolutils.processors;
 
-import com.autonomy.aci.client.services.AciErrorException;
 import com.autonomy.aci.client.services.Processor;
-import com.autonomy.aci.client.services.ProcessorException;
-import com.hp.autonomy.types.idol.Error;
-import com.hp.autonomy.types.idol.IdolResponseParser;
+import com.hp.autonomy.idolutils.IdolXmlMarshaller;
+import com.hp.autonomy.idolutils.IdolXmlMarshallerImpl;
+import com.hp.autonomy.types.idol.QueryResponse;
 
+@SuppressWarnings("WeakerAccess")
 public class AciResponseJaxbProcessorFactory {
-    protected final IdolResponseParser<AciErrorException, ProcessorException> idolResponseParser;
+    protected final IdolXmlMarshaller marshaller;
 
     public AciResponseJaxbProcessorFactory() {
-        idolResponseParser = new IdolResponseParser<>(new IdolResponseParser.Function<Error, AciErrorException>() {
-            @Override
-            public AciErrorException apply(final Error error) {
-                return new AciErrorExceptionBuilder(error).build();
-            }
-        }, new IdolResponseParser.BiFunction<String, Exception, ProcessorException>() {
-            @Override
-            public ProcessorException apply(final String message, final Exception cause) {
-                return new ProcessorException(message, cause);
-            }
-        });
+        marshaller = new IdolXmlMarshallerImpl();
     }
 
     public <T> Processor<T> createAciResponseProcessor(final Class<T> responseDataType) {
-        return new AciResponseJaxbProcessor<>(idolResponseParser, responseDataType);
+        return new AciResponseJaxbProcessor<>(marshaller, responseDataType);
+    }
+
+    public <T extends QueryResponse> Processor<T> createQueryAciResponseProcessor(final Class<T> responseDataType, final Class<?> contentType) {
+        return new QueryAciResponseJaxbProcessor<>(marshaller, responseDataType, contentType);
     }
 
     public Processor<Void> createEmptyAciResponseProcessor() {
-        return new EmptyAciResponseJaxbProcessor(idolResponseParser);
+        return new EmptyAciResponseJaxbProcessor(marshaller);
+    }
+
+    public IdolXmlMarshaller getMarshaller() {
+        return marshaller;
     }
 }

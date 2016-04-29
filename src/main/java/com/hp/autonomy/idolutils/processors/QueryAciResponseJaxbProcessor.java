@@ -8,25 +8,26 @@ package com.hp.autonomy.idolutils.processors;
 import com.autonomy.aci.client.services.Processor;
 import com.autonomy.aci.client.transport.AciResponseInputStream;
 import com.hp.autonomy.idolutils.IdolXmlMarshaller;
+import com.hp.autonomy.types.idol.QueryResponse;
 
-/**
- * Generic processor for handling Idol responses.
- * Note that this uses DOM processing behind the scenes so should not be used for very large responses.
- */
 @SuppressWarnings("WeakerAccess")
-public class AciResponseJaxbProcessor<T> implements Processor<T> {
+public class QueryAciResponseJaxbProcessor<T extends QueryResponse> implements Processor<T> {
     private static final long serialVersionUID = -1983490659468698548L;
 
     private final IdolXmlMarshaller idolXmlMarshaller;
     private final Class<T> responseDataType;
+    private final Class<?> contentType;
 
-    public AciResponseJaxbProcessor(final IdolXmlMarshaller idolXmlMarshaller, final Class<T> responseDataType) {
+    public QueryAciResponseJaxbProcessor(final IdolXmlMarshaller idolXmlMarshaller,
+                                         final Class<T> responseDataType,
+                                         final Class<?> contentType) {
         this.idolXmlMarshaller = idolXmlMarshaller;
         this.responseDataType = responseDataType;
+        this.contentType = contentType;
     }
 
     @Override
     public T process(final AciResponseInputStream aciResponseInputStream) {
-        return idolXmlMarshaller.parseIdolResponseData(aciResponseInputStream, responseDataType);
+        return idolXmlMarshaller.parseIdolQueryResponseData(aciResponseInputStream, responseDataType, contentType);
     }
 }

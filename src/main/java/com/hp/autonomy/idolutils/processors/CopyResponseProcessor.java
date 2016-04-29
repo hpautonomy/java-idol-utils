@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Processor which copies the entire response stream into the given {@link OutputStream} before flushing the output stream.
  */
+@SuppressWarnings("WeakerAccess")
 public class CopyResponseProcessor implements Processor<Boolean> {
 
     private static final long serialVersionUID = 8869650394998971739L;
