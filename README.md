@@ -11,7 +11,7 @@ java-idol-utils is available from the central Maven repository.
     <dependency>
         <groupId>com.hp.autonomy.frontend</groupId>
         <artifactId>idol-utils</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1</version>
     </dependency>
 
 ## License
