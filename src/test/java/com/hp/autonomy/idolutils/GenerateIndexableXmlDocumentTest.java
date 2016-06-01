@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
@@ -39,14 +40,16 @@ public class GenerateIndexableXmlDocumentTest {
 
     @Test
     public void generateFile() throws IOException {
-        final String[] numericFields = new String[]{
-                "1", "1", "1", "2", "3", "4", "4", "8", "15", "4, 5, 8", "1", "0", "15", "4", "1, 4, 12", "1", "21", "11", "5", "8", "8", "9", "9", "9, 5, 6", "1", "11", "5", "6", "6", "6", "1"
-        };
+        final Collection<String> numericFields = new ArrayList<>(1000);
+        final Random random = new Random();
+        for (int i = 0; i < 1000; i++) {
+            numericFields.add(String.valueOf(1451610061 + random.nextInt(1000)));
+        }
 
-        final Collection<SampleDoc> sampleDocs = new ArrayList<>(numericFields.length);
+        final Collection<SampleDoc> sampleDocs = new ArrayList<>(numericFields.size());
         int i = 0;
         for (final String numericField : numericFields) {
-            sampleDocs.add(new SampleDoc(UUID.randomUUID().toString(), "Sample Title " + i++, "Sample Content", numericField));
+            sampleDocs.add(new SampleDoc(UUID.randomUUID().toString(), "Sample Date Title " + i++, "Sample Date Content", numericField));
         }
 
         @SuppressWarnings("TypeMayBeWeakened")
@@ -68,7 +71,7 @@ public class GenerateIndexableXmlDocumentTest {
         private String title;
         @XmlElement(namespace = "", name = "DRECONTENT")
         private String content;
-        @XmlElement(namespace = "", name = "A_NUMERIC_FIELD")
+        @XmlElement(namespace = "", name = "SOME_DATE")
         private String numericField;
 
         public SampleDoc() {
