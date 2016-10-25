@@ -36,12 +36,7 @@ public class CopyResponseProcessorTest {
     @Test
     public void process() throws IOException {
         final AciResponseInputStream aciResponseInputStream = mock(AciResponseInputStream.class);
-        when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(final InvocationOnMock invocationOnMock) throws IOException {
-                return inputStream.read((byte[]) invocationOnMock.getArguments()[0]);
-            }
-        });
+        when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(invocationOnMock -> inputStream.read((byte[]) invocationOnMock.getArguments()[0]));
 
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         final Processor<Boolean> processor = new CopyResponseProcessor(outputStream);
@@ -54,11 +49,8 @@ public class CopyResponseProcessorTest {
     public void badInput() throws IOException {
         final AciResponseInputStream aciResponseInputStream = mock(AciResponseInputStream.class);
         //noinspection ProhibitedExceptionDeclared
-        when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(final InvocationOnMock invocationOnMock) throws Throwable {
-                throw new IOException();
-            }
+        when(aciResponseInputStream.read(any(byte[].class))).thenAnswer(invocationOnMock -> {
+            throw new IOException();
         });
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         final Processor<Boolean> processor = new CopyResponseProcessor(outputStream);
