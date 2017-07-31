@@ -8,7 +8,7 @@ package com.hp.autonomy.idolutils.processors;
 import com.autonomy.aci.client.services.Processor;
 import com.hp.autonomy.idolutils.IdolXmlMarshaller;
 import com.hp.autonomy.idolutils.IdolXmlMarshallerImpl;
-import com.hp.autonomy.types.idol.QueryResponse;
+import com.hp.autonomy.types.idol.responses.QueryResponse;
 
 @SuppressWarnings("WeakerAccess")
 public class AciResponseJaxbProcessorFactory {
