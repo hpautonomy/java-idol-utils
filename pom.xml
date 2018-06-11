@@ -17,11 +17,11 @@
 
     <name>IDOL Utils</name>
     <description>Utility classes to help deal with IDOL responses</description>
-    <url>https://github.com/hpautonomy/java-idol-utils</url>
+    <url>https://github.com/microfocus-idol/java-idol-utils</url>
 
     <organization>
-        <name>Hewlett-Packard Development Company, L.P.</name>
-        <url>http://www.hp.com/</url>
+        <name>Micro Focus</name>
+        <url>http://www.microfocus.com</url>
     </organization>
 
     <inceptionYear>2015</inceptionYear>
@@ -35,22 +35,22 @@
 
     <developers>
         <developer>
-            <name>Alex Scown</name>
-            <email>alex.scown@hp.com</email>
-            <organization>HP</organization>
-            <organizationUrl>http://www.hp.com</organizationUrl>
+            <name>Tung Jin Chew</name>
+            <email>tung-jin.chew@microfocus.com</email>
+            <organization>Micro Focus</organization>
+            <organizationUrl>http://www.microfocus.com</organizationUrl>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:hpautonomy/java-idol-utils.git</connection>
-        <developerConnection>scm:git:git@github.com:hpautonomy/java-idol-utils.git</developerConnection>
-        <url>git@github.com:hpautonomy/java-idol-utils.git</url>
+        <connection>scm:git:git@github.com:microfocus-idol/java-idol-utils.git</connection>
+        <developerConnection>scm:git:git@github.com:microfocus-idol/java-idol-utils.git</developerConnection>
+        <url>git@github.com:microfocus-idol/java-idol-utils.git</url>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/hpautonomy/java-idol-utils/issues</url>
+        <url>https://github.com/microfocus-idol/java-idol-utils/issues</url>
     </issueManagement>
 
     <dependencies>
